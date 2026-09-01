@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Evaluaciones Diagnósticas - Prof. Zula Vargas</title>
+    <!-- Google Fonts para una tipografía moderna y limpia -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* Reset y estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #f8fafc 0%, #eef2f6 100%);
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* Encabezado */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2.5rem 1.5rem;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            border-radius: 2rem;
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -40%;
+            left: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 i {
+            color: #facc15;
+            margin-right: 0.5rem;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            margin-top: 0.6rem;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .teacher-name {
+            display: inline-block;
+            margin-top: 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(4px);
+            padding: 0.5rem 1.8rem;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .teacher-name i {
+            color: #facc15;
+            margin-right: 0.5rem;
+        }
+
+        /* Grid de secciones */
+        .section-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 900px) {
+            .section-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        /* Tarjeta de sección */
+        .section-card {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            padding: 1.8rem 1.8rem 2rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid rgba(226, 232, 240, 0.6);
+        }
+
+        .section-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.10);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid #e2e8f0;
+            color: #0f172a;
+        }
+
+        .section-title i {
+            font-size: 1.6rem;
+            width: 2.2rem;
+            text-align: center;
+        }
+
+        .section-title .icon-food {
+            color: #f97316;
+        }
+        .section-title .icon-comm {
+            color: #3b82f6;
+        }
+
+        /* Lista de evaluaciones */
+        .eval-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .eval-item {
+            background: #f8fafc;
+            border-radius: 1rem;
+            padding: 1.2rem 1.5rem;
+            transition: background 0.15s ease, transform 0.15s ease;
+            border-left: 4px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .eval-item:hover {
+            background: #f1f5f9;
+            transform: translateX(4px);
+        }
+
+        .eval-item .eval-icon {
+            flex-shrink: 0;
+            width: 2.8rem;
+            height: 2.8rem;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #475569;
+            font-size: 1.2rem;
+        }
+
+        .eval-item .eval-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .eval-item .eval-title {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #0f172a;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+
+        .eval-item .eval-title .badge {
+            font-weight: 500;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 0.15rem 0.7rem;
+            border-radius: 100px;
+        }
+
+        .eval-item .eval-title .badge.green {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .eval-item .eval-desc {
+            font-size: 0.9rem;
+            color: #475569;
+            margin-top: 0.15rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .eval-item .eval-link {
+            flex-shrink: 0;
+            margin-left: 0.5rem;
+        }
+
+        .eval-item .eval-link a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: #0f172a;
+            color: #ffffff;
+            padding: 0.5rem 1.2rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.15s ease, transform 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .eval-item .eval-link a:hover {
+            background: #1e293b;
+            transform: scale(1.02);
+        }
+
+        .eval-item .eval-link a i {
+            font-size: 0.8rem;
+        }
+
+        /* Estilos específicos para colores de borde por curso */
+        .eval-item.course-4tag {
+            border-left-color: #f59e0b;
+        }
+        .eval-item.course-4tbg {
+            border-left-color: #10b981;
+        }
+        .eval-item.course-4tcg {
+            border-left-color: #8b5cf6;
+        }
+        .eval-item.course-4toaa {
+            border-left-color: #ef4444;
+        }
+        .eval-item.course-4toba {
+            border-left-color: #3b82f6;
+        }
+        .eval-item.course-4toca {
+            border-left-color: #ec4899;
+        }
+
+        /* Pie de página */
+        .footer {
+            margin-top: 3.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 2rem;
+        }
+
+        .footer a {
+            color: #0f172a;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive para móviles */
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            .header .subtitle {
+                font-size: 1rem;
+            }
+            .section-card {
+                padding: 1.2rem;
+            }
+            .eval-item {
+                flex-wrap: wrap;
+                padding: 1rem;
+            }
+            .eval-item .eval-link {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+            .eval-item .eval-link a {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Ajuste para el ítem de 4TOAA que no se pudo leer */
+        .eval-item .eval-desc .note {
+            color: #94a3b8;
+            font-style: italic;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Encabezado -->
+        <header class="header">
+            <h1><i class="fas fa-clipboard-list"></i>Evaluaciones Diagnósticas</h1>
+            <p class="subtitle">Atención al Cliente &amp; Gestión de la Comunicación</p>
+            <div class="teacher-name">
+                <i class="fas fa-chalkboard-teacher"></i> Prof. Zula Vargas
+            </div>
+        </header>
+
+        <!-- Grid de secciones -->
+        <div class="section-grid">
+
+            <!-- Sección 1: Atención al Cliente en Alimentos y Bebidas -->
+            <section class="section-card">
+                <div class="section-title">
+                    <i class="fas fa-utensils icon-food"></i>
+                    Atención al Cliente en A&amp;B
+                </div>
+                <div class="eval-list">
+                    <!-- 4TOAG -->
+                    <div class="eval-item course-4tag">
+                        <div class="eval-icon"><i class="fas fa-users"></i></div>
+                        <div class="eval-content">
+                            <div class="eval-title">
+                                4TOAG
+                                <span class="badge">A&amp;B</span>
+                            </div>
+                            <div class="eval-desc">
+                                Evaluación Diagnóstica de Atención al Cliente en el Ámbito de Alimentos y Bebidas.
+                            </div>
+                        </div>
+                        <div class="eval-link">
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSf47jkz4j0TTRDirO5307fCDqLfY8S06ujE4Gy31NPT1-7CGQ/viewform?usp=header" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-arrow-right"></i> Ir
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 4TOBG -->
+                    <div class="eval-item course-4tbg">
+                        <div class="eval-icon"><i class="fas fa-users"></i></div>
+                        <div class="eval-content">
+                            <div class="eval-title">
+                                4TOBG
+                                <span class="badge">A&amp;B</span>
+                            </div>
+                            <div class="eval-desc">
+                                Evaluación Diagnóstica de Atención al Cliente en el Ámbito de Alimentos y Bebidas.
+                            </div>
+                        </div>
+                        <div class="eval-link">
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdr-g9XGt31igkB2GJi5hgR7gi3Mq-n6xi_Hc0D9b30KuHEjw/viewform?usp=header" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-arrow-right"></i> Ir
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 4TOCG -->
+                    <div class="eval-item course-4tcg">
+                        <div class="eval-icon"><i class="fas fa-users"></i></div>
+                        <div class="eval-content">
+                            <div class="eval-title">
+                                4TOCG
+                                <span class="badge">A&amp;B</span>
+                            </div>
+                            <div class="eval-desc">
+                                Evaluación Diagnóstica de Atención al Cliente en el Ámbito de Alimentos y Bebidas.
+                            </div>
+                        </div>
+                        <div class="eval-link">
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfRgblJYZ8bzl7Xd0ZXh_Lv2ZGzUfQ4B-VDHb4pbCzf0D4LXw/viewform?usp=header" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-arrow-right"></i> Ir
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección 2: Gestión de la Comunicación y Atención al Cliente -->
+            <section class="section-card">
+                <div class="section-title">
+                    <i class="fas fa-comment-dots icon-comm"></i>
+                    Gestión de la Comunicación
+                </div>
+                <div class="eval-list">
+                    <!-- 4TOAA -->
+                    <div class="eval-item course-4toaa">
+                        <div class="eval-icon"><i class="fas fa-building"></i></div>
+                        <div class="eval-content">
+                            <div class="eval-title">
+                                4TOAA
+                                <span class="badge green">Comunicación</span>
+                            </div>
+                            <div class="eval-desc">
+                                Evaluación Diagnóstica del Módulo Gestión de la Comunicación y Atención al Cliente.
+                                <span class="note">(requiere inicio de sesión Google)</span>
+                            </div>
+                        </div>
+                        <div class="eval-link">
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSc0g6Vlmz0InHPpMkt9rh4YGUn3T5pesDQphRB0vB2su9cE_g/viewform?usp=header" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-arrow-right"></i> Ir
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 4TOBA -->
+                    <div class="eval-item course-4toba">
+                        <div class="eval-icon"><i class="fas fa-building"></i></div>
+                        <div class="eval-content">
+                            <div class="eval-title">
+                                4TOBA
+                                <span class="badge green">Comunicación</span>
+                            </div>
+                            <div class="eval-desc">
+                                Evaluación Diagnóstica del Módulo Gestión de la Comunicación y Atención al Cliente.
+                            </div>
+                        </div>
+                        <div class="eval-link">
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfjH47gTeBK5JwFmMYpES2oKHRM72Oy9rhlPtzVnwUZXxxnKw/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-arrow-right"></i> Ir
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 4TOCA -->
+                    <div class="eval-item course-4toca">
+                        <div class="eval-icon"><i class="fas fa-building"></i></div>
+                        <div class="eval-content">
+                            <div class="eval-title">
+                                4TOCA
+                                <span class="badge green">Comunicación</span>
+                            </div>
+                            <div class="eval-desc">
+                                Evaluación Diagnóstica del Módulo Gestión de la Comunicación y Atención al Cliente.
+                            </div>
+                        </div>
+                        <div class="eval-link">
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLScdigs9fJbJFqnnD-F18rz9sAFFJhFG6VxfIZmSufuZOd2xDg/viewform?usp=header" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-arrow-right"></i> Ir
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Pie de página -->
+        <footer class="footer">
+            <p>
+                <i class="fas fa-school" style="margin-right: 0.4rem;"></i>
+                Politécnico Rafaela Marrero Paulino · Año Escolar 2026-2027
+                <br />
+                <span style="font-size: 0.85rem; color: #94a3b8;">
+                    <i class="fas fa-chevron-right" style="font-size: 0.6rem; margin: 0 0.3rem;"></i>
+                    Diseñado para la comunidad educativa
+                </span>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
